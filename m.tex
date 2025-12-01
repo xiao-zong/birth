@@ -1,0 +1,762 @@
+%Royal Statistical Society Series B Statistical Methodology
+\documentclass[12pt]{article}
+
+%    \renewcommand{\baselinestretch}{1.1}
+
+%Packages
+\usepackage{authblk}
+\usepackage{amsmath,amsfonts,amssymb,lmodern,geometry,enumerate}
+%\usepackage{cancel}
+\usepackage{mathtools} 
+\usepackage[normalem]{ulem}
+%\usepackage[justification=centering]{caption}
+\usepackage[font=small,labelfont=bf]{caption}
+%\usepackage{tkz-euclide}
+%\usetkzobj{all}
+%\usepackage{refcheck}
+%\usepackage{showkeys}
+%\usepackage{subcaption}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+%\usepackage{scalefnt}
+\usepackage{dsfont}
+\usepackage{stmaryrd}
+\usepackage{color}
+\usepackage{bm,bbm}
+\usepackage{mathrsfs,url}
+\usepackage[hidelinks]{hyperref}
+%\usepackage{breakcites} %for breaking the citations
+%\usepackage{textcase}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+%\usepackage{wasysym}
+%\usepackage{flushend,cuted}
+\usepackage{bm}
+\usepackage{tabularx}
+\usepackage{indentfirst}
+\usepackage{xparse}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+%\usepackage{mdwlist}
+%\usepackage{tkz-graph}
+%\usepackage{transparent}
+\usepackage{amsthm}
+\usepackage{nameref}
+%\GraphInit[vstyle = Shade]
+
+\topmargin -1.5cm \evensidemargin 0.5cm \oddsidemargin 0.5cm
+\textwidth15.8cm \textheight22cm
+\parskip10pt
+
+
+%Shortcuts for Theorems
+
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defi}[thm]{Definition}
+\newtheorem{lma}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{countexam}[thm]{Counterexample}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{con}[thm]{Conjecture}
+\newtheorem{assum}[thm]{Assumption}
+
+\newenvironment{Proof}{\removelastskip\par\medskip
+\noindent{\em Proof.} \rm}{\penalty-20\null\hfill$\square$\par\medbreak}
+\allowdisplaybreaks
+
+\makeatletter
+%%% Define shorter display equations commands
+\def\be#1{\begin{equation*}#1\end{equation*}}
+\def\ben#1{\begin{equation}#1\end{equation}}
+\def\bes#1{\begin{equation*}\begin{split}#1\end{split}\end{equation*}}
+\def\besn#1{\begin{equation}\begin{split}#1\end{split}\end{equation}}
+\def\bea#1{\begin{align*}#1\end{align*}}
+\def\bean#1{\begin{align}#1\end{align}}
+\def\bg#1{\begin{gather*}#1\end{gather*}}
+\def\bgn#1{\begin{gather}#1\end{gather}}
+\setlength{\multlinegap}{1em}
+\def\bml#1{\begin{multline*}#1\end{multline*}}
+\def\bmln#1{\begin{multline}#1\end{multline}}
+
+\def\note#1{\par\smallskip%
+\noindent%
+\llap{$\boldsymbol\Longrightarrow$}%
+\fbox{\vtop{\hsize=0.98\hsize\parindent=0cm\small\rm #1}}%
+\rlap{$\boldsymbol\Longleftarrow$}%
+\par\smallskip}
+\newcommand{\leftsup}[2]{{}^{#1}\! #2}%left upper index
+
+%%% Define bracket commands
+\def\given{\mskip 0.5mu plus 0.25mu\vert\mskip 0.5mu plus 0.15mu}
+\newcounter{@bracketlevel}
+\def\@bracketfactory#1#2#3#4#5#6{
+\expandafter\def\csname#1\endcsname##1{%
+\addtocounter{@bracketlevel}{1}%
+\global\expandafter\let\csname @middummy\alph{@bracketlevel}\endcsname\given%
+\global\def\given{\mskip#5\csname#4\endcsname\vert\mskip#6}\csname#4l\endcsname#2##1\csname#4r\endcsname#3%
+\global\expandafter\let\expandafter\given\csname @middummy\alph{@bracketlevel}\endcsname
+\addtocounter{@bracketlevel}{-1}}%
+}
+\def\bracketfactory#1#2#3{%
+\@bracketfactory{#1}{#2}{#3}{relax}{0.5mu plus 0.25mu}{0.5mu plus 0.15mu}
+\@bracketfactory{b#1}{#2}{#3}{big}{1mu plus 0.25mu minus 0.25mu}{0.6mu plus 0.15mu minus 0.15mu}
+\@bracketfactory{bb#1}{#2}{#3}{Big}{2.4mu plus 0.8mu minus 0.8mu}{1.8mu plus 0.6mu minus 0.6mu}
+\@bracketfactory{bbb#1}{#2}{#3}{bigg}{3.2mu plus 1mu minus 1mu}{2.4mu plus 0.75mu minus 0.75mu}
+\@bracketfactory{bbbb#1}{#2}{#3}{Bigg}{4mu plus 1mu minus 1mu}{3mu plus 0.75mu minus 0.75mu}
+}
+\bracketfactory{clc}{\lbrace}{\rbrace}
+\bracketfactory{clr}{(}{)}
+\bracketfactory{cls}{[}{]}
+\bracketfactory{abs}{\lvert}{\rvert}
+\bracketfactory{norm}{\Vert}{\Vert}
+\bracketfactory{floor}{\lfloor}{\rfloor}
+\bracketfactory{ceil}{\lceil}{\rceil}
+\bracketfactory{angle}{\langle}{\rangle}
+
+%%%Define scr commands
+\def\scrF{\mathscr{F}}
+\def\scrG{\mathscr{G}}
+
+%%% Define corresponding vertical bar commands
+
+\def\calF{\mathcal{F}}
+\def\calG{\mathcal{G}}
+\def\ahalf{{\textstyle\frac12}}
+\def\eq#1{\eqref{#1}}
+\def\I{\mathrm{I}}
+\def\Bi{\mathrm{Bi}}
+\def\IP{\prob}
+% \newcommand{\tunder}[1]{\underaccent{\tilde}{#1}}
+\newcommand{\edgevar}[1]{[{#1}]_{\sim}}
+
+% \newcommand{\edgevar}{[e]_{\sim}}
+\def\ER{Erd\H{o}s-R\'enyi}
+% \def\hKin{\hat{K}^{\mathrm{in}}}
+% \def\hKout{\hat{K}^{\mathrm{out}}}
+% \def\Kin{K^{\mathrm{in}}}
+% \def\Kout{K^{\mathrm{out}}}
+
+\makeatother
+
+
+%Shortcuts for sets of numbers
+\newcommand{\law}{\mathscr{L}}
+\newcommand{\HH}{\mathscr{H}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\Pro}{\mathbb{P}} 
+\newcommand{\prob}{\Pro}
+\DeclareMathOperator{\E}{\mathbb{E}}
+% \newcommand{\E}{\E}
+\newcommand{\mean}{\E}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\non}{\nonumber}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\G}{\mathbb{G}}
+\newcommand{\LL}{\textbf{L}}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\var}{\mathrm{Var}}
+\DeclareMathOperator{\cov}{\mathrm{Cov}}
+\DeclareMathOperator{\bigo}{\mathrm{O}}
+\newcommand{\lito}{\mathop{{}\mathrm{o}}\mathopen{}}
+\newcommand{\K}{\textbf{Ker}}
+\newcommand{\Id}{\textbf{Id}}
+\newcommand{\card}{\mathop{\mathrm{card}}}
+
+%%%%%%%%%%%%%
+%%%%%Xia's commands
+%%%%%%%%%%%%%
+\usepackage{subfig}
+
+\newcommand{\bn}{{\bf N}}
+\newcommand{\bone}{{\bf 1}}
+\newcommand{\bc}{{\mathds{C}}}
+\newcommand{\bp}{{\bf P}}
+\newcommand{\bh}{{\textbf H}}
+\newcommand{\bi}{{\bf i}}
+\newcommand{\bk}{{\bf k}}
+\newcommand{\br}{{\bf R}}
+\newcommand{\bq}{{\bf Q}}
+\newcommand{\bs}{{\bf S}}
+\newcommand{\bz}{{\bf Z}}
+\newcommand{\bG}{\mbox{\boldmath$\Gamma$}}
+\newcommand{\ba}{{\bm\alpha}}
+\newcommand{\bl}{{\bm\lambda}}
+\newcommand{\bmu}{{\bm\mu}}
+\newcommand{\bx}{{\bm x}}
+\newcommand{\bX}{{\bm X}}
+\newcommand{\bY}{{\bm Y}}
+\newcommand{\bZ}{{\bm Z}}
+\newcommand{\cF}{{\cal F}}
+\newcommand{\ca}{{\cal A}}
+\newcommand{\cb}{{\cal B}}
+\newcommand{\scrB}{{\mathscr B}}
+\newcommand{\cc}{{\cal C}}
+\newcommand{\cd}{{\cal D}}
+\newcommand{\cf}{{\cal F}}
+\newcommand{\cg}{{\cal G}}
+\newcommand{\ch}{{\cal H}}
+\newcommand{\ci}{{\cal I}}
+\newcommand{\cl}{{\cal L}}
+\newcommand{\cm}{{\cal M}}
+\newcommand{\cn}{{\cal N}}
+\newcommand{\cs}{{\cal S}}
+\newcommand{\cu}{{\cal U}}
+\newcommand{\cy}{{\cal Y}}
+\newcommand{\dtvr}{{d_{\rm tv}}}%total variation for rvs
+\newcommand{\dtv}{{d_{\rm TV}}}
+\newcommand{\dk}{{d_{\rm K}}}
+\newcommand{\dw}{{d_{\rm W}}}
+\def\dkr{d_{\mathrm{KR}}}
+\def\tg{{\tilde g}}
+\def\tf{{\tilde f}}
+\newcommand{\Pn}{{\rm Pn}}
+\newcommand{\Po}{{\rm Po}}
+\def\t#1{^{(#1)}}
+
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator*{\essinf}{ess\,inf}
+% \newcommand{\Pn}{{\rm Pn}}
+
+\def\Ref#1{(\ref{#1})}
+\def\a{\alpha}
+\def\b{\beta}
+\def\s{\sigma}
+\def\f{\phi}
+\def\w{\omega}
+%\def\l{\lambda}
+\def\La{\Lambda}
+\newcommand{\oF}{{\overline{F}}}
+\def\p{\pi}
+\def\tod{\buildrel{{\rm d}{\to}}}
+\def\eqd{\stackrel{\rm d}{=}}
+\def\siim{\sum_{i=1}^m}
+\def\sjn{\sum_{j=1}^n}
+
+% \def\tpj{\overline{\tau^+_j}}
+% \def\tmj{\overline{\tau^-_j}}
+% \def\tpi{\overline{\tau^+_i}}
+% \def\tpi1{\overline{\tau^+_{i-1}}}
+% \def\tmi{\overline{\tau^-_i}}
+\def\stg{\stackrel{\mbox{\scriptsize st}}{\ge }}
+\def\stl{\stackrel{\rm{\scriptsize st}}{\le }}
+
+\newcommand*\rot[1]{\rotatebox{90}{#1}}
+
+\makeatletter
+
+% \newcommand{\qed}{\box}
+%\newcommand{\qed}{\nopagebreak\hspace*{\fill}{\vrule width6pt height6ptdepth0pt}\par}
+
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\yellow}[1]{\textcolor{yellow}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+\newcommand{\magenta}[1]{\textcolor{magenta}{#1}}
+
+\def\ignore#1{}
+
+\def\Comment#1{
+    \marginpar{$\bullet$\quad{\tiny #1}}}
+
+%%%%%definition of counters
+
+\makeatletter
+\newcommand*\labelcounter[2]{\begingroup
+  \protected@edef\@currentlabel{\csname p@#1\endcsname\csname the#1\endcsname}%
+  \label{#2}\endgroup}
+\newcommand*\refsetcounter[2]{\setcounter{#1}{#2}%
+  \protected@edef\@currentlabel{\csname p@#1\endcsname\csname the#1\endcsname}%
+  }
+\makeatother
+
+\newcounter{rtaskno}
+\DeclareRobustCommand{\rtask}[1]{%
+   \refstepcounter{rtaskno}%
+   \thertaskno\label{#1}}
+
+\newcounter{con}%for constants
+\newcommand{\const}{{\stepcounter{con}\rm\thecon}}
+%to use the counter number, type \const and then immediately use \qcon{} so that the counter will be added by 1.
+%Use \labelcounter{con}{eq:123} to extract the numeric number of the counter at this point
+
+%%%%%end of definition of counters
+
+%%%%%%%%%%%%%%
+%end of Xia's commands
+%%%%%%%%%%%%%%
+
+\numberwithin{equation}{section}
+
+\begin{document}
+\title{\sc\bf\large{On Ergodicity of Spatial Birth--Death processes}}
+
+\author{
+Qingwei Liu\footnote{School of Mathematics and Statistics,
+	The University of Melbourne,
+	VIC 3010, Australia. E-mail: qingwei.liu@unimelb.edu.au.}\\ 
+Aihua Xia\footnote{School of Mathematics and Statistics,
+	The University of Melbourne,
+	VIC 3010, Australia. E-mail: aihuaxia@unimelb.edu.au. Work supported in part by Australian Research Council Grant No DP220102666.}\\ {\it University of Melbourne}
+	}
+
+\def\parsedate #1:20#2#3#4#5#6#7#8\empty{20#2#3-#4#5-#6#7}
+\def\moddate{\expandafter\parsedate\pdffilemoddate{\jobname.tex}\empty}
+\date{\moddate}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+
+\vskip12pt \noindent\textit {Key words and phrases\/}: 
+
+\vskip12pt \noindent\textit{AMS 2020 Subject Classification\/}: 
+
+
+\section{Introduction}
+
+
+\section{Preliminaries}
+\subsection*{Point processes}
+The carrier space $S$ of the point processes is complete and separable, equipped with metric $\varrho$ and corresponding Borel $\sigma$-field $\mathscr{B}(S)$.
+Since a subset of $S$ can equivalently be represented as a non-negative integer-valued measure, we consider the space
+$\mathcal{N}$ of locally finite non-negative integer-valued measures on $(S,\mathscr{B}(S))$.
+%Let $\mathcal{N}_s$ denote the subspace of $\mathcal{N}$ of locally finite measures $\xi\in\mathcal{N}$ satisfying $\xi(\{x\})=0$ or $1$ for all $x\in S$.
+Define $\mathscr{H}$ as the smallest $\sigma$-field on $\mathcal{N}$ such that the mappings $\mu\mapsto\mu(B)$ are measurable for all relatively compact sets $B$ in $\mathscr{B}(S)$~\cite[\S1.1]{kallenberg83}.
+%, and $\mathscr{H}_s{:=}\mathscr{H}\cap \mathcal{N}_s$. 
+A point process $\mathcal{P}$ is a measurable mapping from an underlying probability space to $(\mathcal{N},\mathscr{H})$.
+%A point process $\mathcal{P}$ is called {\it simple} if
+%$$\prob\left(\mathcal{P}\in \mathcal{N}_s\right)=1.$$
+Denote $\mathscr{P}(\mathcal{N})$ the space of all probability distributions on $(\mathcal{N},\mathscr{H})$.
+
+For two configurations $\xi_1,\xi_2\in\mathcal{N}$, we denote $|\xi_1-\xi_2|$ as the total variation of the signed measure $\xi_1-\xi_2$, that is,
+$|\xi_1-\xi_2|(B)=\xi^+(B)+\xi^-(B)$, where $\xi^+$ and $\xi^-$ represent the upper and lower variations of $\xi_1-\xi_2$, respectively, as described in the Jordan decomposition~\cite[p.~421]{B95}. Additionally, we define the norm $\|\xi_1-\xi_2\|:=\xi^+(S)+\xi^-(S)$.
+
+Let $\mathcal{L}(\Xi)$ denote the distribution of a random element $\Xi$. %Let $\Pn(\theta)$ denote the Poisson distribution with parameter $\theta > 0$, and $\Po(\Lambda)$ as a Poisson point process with mean measure $\Lambda$.
+
+We further denote
+$$
+\mathcal{N}_n:=\{\xi\in\mathcal{N}:\|\xi\|=n\},~~~
+\mathcal{N}_{>n}:=\cup_{k=n+1}^{\infty}\mathcal{N}_k,
+$$
+and $\mathscr{H}_n:=\mathscr{H}\cap\mathcal{N}_n$, for $n\ge0$. 
+Similarly, we write the $\N:=\{0,1,2,\dots\}$ and 
+$$\N_{>n}:=\{n+1,n+2,\dots\}.$$
+\subsection*{Markov processes and martingale problem}
+ 
+Let $E$ be a metric space. Denote by $\mathcal{M}(E)$ the collection of all real-valued Borel measurable functions on $E$, and  
+$\mathcal{B}(E) \subset \mathcal{M}(E)$ the Banach space of bounded functions with 
+$\|f\| := \sup_{x \in E} |f(x)|,$
+and $\overline{\mathcal{C}}(E) \subset \mathcal{B}(E)$ is the subspace of bounded continuous functions.
+\begin{prop}\cite[Theorem~4.9.9]{EK09}\label{statdis1}
+Let $E$ be locally compact and separable. 
+Let $\{T(t)\}$ be a semigroup on $\mathcal{B}(E)$ given by a transition function $P(t,x,\Gamma)$ such that 
+$T(t): \overline{\mathcal{C}}(E) \to \overline{\mathcal{C}}(E)$ for all $t\ge0$,
+and let $X$ be a measurable Markov process corresponding to $\{T(t)\}$.
+Let $\varphi, \psi \in \mathcal{M}(E)$, $\varphi \ge 0$, $\psi \le C$ for some constant $C$, and 
+$\lim_{x \to \Delta} \psi(x) < 0,$
+and suppose that 
+\begin{equation}
+	\varphi(X(t))-\int_0^t\psi(X(s))ds
+\end{equation}
+is a supermartingale. 
+Then there exists a stationary distribution for $\{T(t)\}$.
+\end{prop}
+\section{Spatial birth--death processes}
+\subsection{Construction}
+A spatial birth--death process $\{X_t\}_{t\ge0}$, first introduced by \cite{Preston75}, is a Markov process defined on the configuration space $(\mathcal{N},\mathscr{H})$.
+In the seminal paper \cite{Preston75}, the spatial birth--death process was constructed to allow only single births and single deaths. 
+In this note, we extend the framework to consider a spatial birth--death process that permits multiple births but only single death.
+Suppose the process evolves over time through the birth and death of individuals, with the mechanism governing this evolution specified by the following construction.
+\begin{enumerate}
+	\item At any time $t$, there are only finite individuals alive;
+	\item Each time, if there is a birth, it would bring a cluster of individuals.
+
+\item Suppose that there are $n$ individuals alive at time $t$, with locations 
+$\xi = \{x_1, \dots, x_n\}$. For each $\ell \ge 1$, assume that there exist 
+a measurable function $\lambda_\ell : \mathcal{N} \to [0, \infty)$ and 
+a finite, symmetric measure $b_\ell(\xi, \cdot)$ on 
+$(S^\ell, \mathcal{S}^{\otimes \ell})$ such that:
+\begin{enumerate}
+  \item[i)] the probability that $\ell$ new individuals are born is 
+  $\ell\, \lambda_\ell(\xi)$;
+  \item[ii)] conditional on the event that $\ell$ new individuals are born, 
+  for each $F \in \mathcal{S}^{\otimes \ell}$ the probability that their 
+  locations lie in $F$ during the interval $[t, t+s]$ is given by
+  \[
+    b_\ell(\xi, F)\, s + o(s).
+  \]
+\end{enumerate}
+	\item If there are $n$ individuals alive at time $t$, with locations $\xi=\{x_1,\dots,x_n\}$, then there exits a $\mathcal{S}$-measurable function $D(\xi,\cdot): S\to[0,\infty)$ such that the probability of the individual at the point $x_i\in\xi$ dying between times $t$ and $t+s$ is $D(\xi,x_i)s+o(s)$;
+	\item The probability of more than one change in the process between times $t$ and $t+s$ is $o(s)$.
+\end{enumerate}
+More formally, we can construct the Markov process $\{X_t\}_{t\ge0}$ from a jump process $\{Y_n\}_{n\ge0}$. 
+Denote $\nu\in\mathscr{P}(\mathcal{N})$ a probability distribution of a Gibbs point process on $S$.
+Let $D:\mathcal{N}\times S \to [0,\infty)$ be a bounded, measurable function. For each $\ell \ge 1$, let 
+$\lambda_\ell : \mathcal{N} \to [0,\infty)$ be measurable and bounded, and let 
+$b_\ell : \mathcal{N} \times \mathcal{S}^{\otimes \ell} \to [0,\infty)$ be a kernel such that, for every 
+$\xi \in \mathcal{N}$, the measure $b_\ell(\xi, \cdot)$ is symmetric on 
+$(S^\ell, \mathcal{S}^{\otimes \ell})$. Define
+\begin{align}
+    b(\xi) &:= \sum_{\ell=1}^{\infty} \ell\, \lambda_\ell(\xi)\, b_\ell(\xi, S^\ell),
+\end{align}
+for any $\xi \in \mathcal{N}$. Furthermore, define
+\begin{align}
+    d(\xi) &:= \sum_{x \in \xi} D(\xi, x),
+\end{align}
+for all $\xi \neq \emptyset$, and set $d(\emptyset) := 0$.  
+Finally, denote
+\[
+    \lambda(\xi) := b(\xi) + d(\xi).
+\]
+
+\begin{enumerate}
+	\item $\{Y_0,Y_1,Y_2,\dots\}$ is a Markov chain in $\mathcal{N}$ satisfies that
+\begin{enumerate}
+	\item For any $M\in\mathscr{H}$, $\IP(Y_0\in M)=\nu(M)$;
+	\item Given $Y_n=\xi$, then 
+\begin{equation}
+	Y_{n+1}:=\begin{cases}
+		\xi\cup\{x_1,\dots,x_\ell\},\ \ \ &\mbox{w.p.}~\frac{1}{\lambda(\xi)}\ell\lambda_{\ell}(\xi)b_{\ell}(\xi,\mathrm{d}x_1,\dots,\mathrm{d}x_{\ell});\\
+		\xi\backslash\{x\},\ \ \ &\mbox{w.p.}~\frac{D(\xi,x)}{\lambda(\xi)};
+	\end{cases}
+\end{equation}
+\item That is $\{Y_n\}_{n\ge0}$ has initial distribution $\nu$ and the transition function
+\begin{align}
+	K(\xi,M):&=\IP(Y_{n+1}\in M|Y_n=\xi)\nonumber\\
+		  &=\frac{1}{\lambda(\xi)}\sum_{\ell=1}^{\infty}\ell\lambda_{\ell}(\xi)\int_{S^{\ell}}\bone(\xi\cup\{x_1,\dots,x_\ell\}\in M)b_{\ell}(\xi,\mathrm{d}x_1,\dots,\mathrm{d}x_{\ell})\nonumber\\
+		  &\ \ \ \ +\frac{1}{\lambda(\xi)}\sum_{x\in\xi}D(\xi,x)\bone(\xi\backslash\{x\}\in M).\label{trans1}
+\end{align}
+\end{enumerate}
+\item Let $\{T_0,T_1,T_2,\dots\}$ be a sequence of i.i.d. exponential random variables with parameter $1$ and indepdent of $\{Y_n\}_{n\ge0}$.
+\item Define 
+\begin{equation}
+	X_t:=\begin{cases}Y_0,\ \ \ &0\le t \le \frac{T_0}{\lambda(Y_0)};\\
+		Y_k,\ \ \ &\sum_{j=0}^{k-1}\frac{T_j}{\lambda(Y_j)}\le t<\sum_{j=0}^k\frac{T_j}{\lambda(Y_j)}.
+	\end{cases}
+\end{equation}
+\end{enumerate}
+%Note that $\lambda(\cdot)$ is the intensity of the Markov jump process.
+Denote $\lambda:=\sup_{\xi\in\mathcal{N}}\lambda(\xi)$. To avoid trivialities, assume that $\lambda>0$. Define the transition function $K'(\xi,M)$ on $\mathcal{N}\times \mathscr{H}$ by 
+\begin{equation}
+	K'(\xi,M):=\left(1-\frac{\lambda(\xi)}{\lambda}\right)\delta_{\xi}(M)+\frac{\lambda(\xi)}{\lambda}K(\xi,M),
+\end{equation}
+with $K$ defined in \eqref{trans1}.
+
+
+Given $X_t=\xi$ with $\xi\in\mathcal{N}$ and $t\ge0$, then the waiting time to the next jump has an exponential distribution with expectation $1/\lambda(\xi)$ and is independent of the past history. The subsequent jump leads either to a death of an individual located at point $x\in\xi$ with probability $\frac{D(\xi,x)}{\lambda(\xi)}$, or a birth of $\ell$ individuals, distributed according to $b_{\ell}(\xi,\cdot)$.  
+
+The generator $\mathscr{A}$ of $\{X_t\}_{t\ge0}$ is given by
+\begin{equation}
+	(\mathscr{A}f)(\xi)=\lambda(\xi)\int(f(\zeta)-f(\xi))K(\xi,\mathrm{d}\zeta),
+\end{equation}
+which can also be rewrited as 
+\red{
+\begin{equation}
+	\sum_{\ell=1}^\infty \ell \lambda_\ell(\xi)\int_{S^\ell}\left(f(\xi\cup\{x_1,\dots,x_\ell\})-f(\xi)\right)b_\ell(\xi,\mathrm{d}x_1\cdots\mathrm{d}x_\ell)+\int_{S}D(\xi,x)\left(f(\xi\backslash\{x\})-f(\xi)\right)\xi(\mathrm{d}x).
+\end{equation}}
+for any bounded measurable function $f:\mathcal{N}\to[0,\infty)$.
+We call the functions $b: \mathcal{N}\to[0,\infty)$ the birth rate coefficient and $d:\mathcal{N}\to[0,\infty)$ the death rate coefficient. 
+
+Consequently, the semigroup $\{T(t)\}$ generated by $\mathscr{A}$ is given by 
+\begin{equation}
+	T(t):=\sum_{k=0}^{\infty}\frac{(t\mathscr{A})^k}{k!}=\exp(t\mathscr{A}).
+\end{equation}
+
+Note this spatical birth--death process allows multiple birth and single death. The case that only single birth and single death are allowed, is often referred as {\em Glauber dynamics in continuum}, see \cite{KL05} and \cite{moller03book}. 
+
+
+\subsection{Uniqueness and backwards equations}
+
+To define such a process analytically, we also need to give its transition semigroup, i.e., for $t\ge0$, we need to define $Q_t:\mathcal{N}\times\mathscr{H}\to[0,1]$ such that 
+$$Q_t(\xi,M):=\IP(X_t\in M|X_0=\xi),$$
+for any $\xi\in\mathcal{N}$ and $M\in\mathscr{H}$. 
+$Q_t$ is defined to be the solution of Kolmogorov's backwards equations
+\begin{equation}\label{backweq-1}
+	\frac{\partial}{\partial t}Q_t(\xi,M)=-\lambda(\xi)Q_t(\xi,M)+\lambda(\xi)\int Q_t(\zeta,M)K(\xi,\mathrm{d}\zeta),
+\end{equation}
+with the initial conditions 
+\begin{equation}\label{backweq-2}
+Q_0(\xi,M)=\delta_{\xi}(M).
+\end{equation}
+Let $Q_t^{(n)}(\xi,M)$ be the probability of a transition from state $\xi$ to $M$ in time $t$ with at most $n$ jumps. 
+Let 
+\begin{equation}
+	Q_t^{(\infty)}(\xi,M):=\lim_{n\to\infty}Q_t^{(n)}(\xi,M).
+\end{equation}
+$Q_t^{(\infty)}$ is the minimal solution of the backwards equations \eqref{backweq-1} and \eqref{backweq-2}.
+Recall the fact about the minimal solution: \eqref{backweq-1} and \eqref{backweq-2} have a unique solution if and only if $Q_t^{(\infty)}(\xi,\mathcal{N})=1$ for all $t\ge0$ and $\xi\in\mathcal{N}$. 
+For $n\ge0$, let $\leftsup{(n)}{Q_t}(\xi,M)$ be the probability of a transition from $\xi$ to $M$ in time $t$ without having entered $\mathcal{N}_{>n}:=\cup_{k=n+1}^{\infty}\mathcal{N}_k$, and 
+$$
+\leftsup{(\infty)}{Q_t}(\xi,M):=\lim_{n\to\infty}\leftsup{(n)}{Q_t}(\xi,M).
+$$
+\begin{lma}\label{lma1}
+	For any $\xi\in\mathcal{N}$, $M\in\mathscr{H}$, it holds 
+\begin{equation}
+	\leftsup{(\infty)}{Q_t}(\xi,M)=Q_t^{(\infty)}(\xi,M).
+\end{equation}
+\end{lma}
+\begin{proof}
+	\textcolor{cyan}{It is easy to check that $\leftsup{(\infty)}{Q_t}$ satisfies \eqref{backweq-1} and \eqref{backweq-2}}, and that for any $n$, $\leftsup{(n)}{Q_t}\le Q_t^{(\infty)}$. 
+\end{proof}
+
+
+\subsection{Construction of a coupled single death process}
+Following the idea in \cite{Preston75}, it is often convenient to transform the analysis of a spatial birth--death process into that of a coupled simple birth--death process.
+
+Set for any $n\ge1$, 
+\begin{align}
+	q_{n,n-1}&:=\inf_{\xi:\|\xi\|=n}d(\xi)=\inf_{\xi:\|\xi\|=n}\sum_{x\in\xi}D(\xi,x);\label{qmatrix1}\\
+	q_{i,j}&:=0,~~~\forall~j<i-1;\\
+	q_{n,n+\ell}&:=\sup_{\xi:\|\xi\|=n}\ell b_{\ell}(\xi,S^{\ell}),~~~\forall~\ell\ge1;\\
+	q_{n,n}&:=-q_{n,n-1}-\sum_{\ell=1}^{\infty}q_{n,n+\ell}.\label{qmatrix4}
+\end{align}
+Notationally, we also set $q_n:=-q_{n,n}$. 
+
+Let $\{Z_t\}_{t\ge0}$ denote a single death process on $\N:=\{0,1,2,\dots\}$ with $Q$-matrix $Q=(q_{i,j})$.
+The single-death process $\{Z_t\}_{t \ge 0}$ is a simple birth--death process that allows for multiple births but only single deaths. Such a process is also referred to as a \emph{downwardly skip-free process} \cite{CPZC05}.
+Suppose that a single death process is irreducible and recurrent, \cite[Theorem~1.1]{Zhang18} establishes the necessary and sufficient conditions for the process to be ergodic and strongly ergodic, respectively.
+
+In order to prove our main theorm, we need to compare our spatial birth-death process with the single death process with $Q$-matrix given in \eqref{qmatrix1}-\eqref{qmatrix4}.
+\begin{thm}\label{thm-uni1}
+	Suppose that the backwards equations for the single death process $\{Z_t\}_{t\ge0}$ have a unique solution $q_t$. Then the backwards equations corresponding to $\lambda$ and $K$ have a unique solution $Q_t$.
+\end{thm}
+\begin{proof}
+Let us first formally restate the definitions of $\leftsup{(b)}{Q}_t(\xi,M)$ and $\leftsup{(m)}{q}_t(n,K)$.
+\begin{enumerate}
+	\item Let $\leftsup{(m)}{Q}_t(\xi,M)$ denote the probability of the spatial birth-death process $\{X_t\}_{t\ge0}$ transitioning from state $\xi$ to a set of states $M$ in time $t$, given the process has not entered the set $\mathcal{N}_{>m}$ during the interval $[0, t]$, for any $\xi\in\mathcal{N}$ and $M\in\mathscr{H}$.
+	\item Let $\leftsup{(k)}{q}_t(n,K)$ denote the probability of the single death process $\{Z_t\}_{t\ge0}$ transitioning from state $n$ to $K$ in time $t$, given the process has not entered the set $\N_{>k}$ during the interval $[0, t]$, for any $n\in\N$ and $K\subseteq\N$.
+\end{enumerate}
+We then construct a new jump process $\{(\tilde{X}_t,\tilde{Z}_t)\}_{t\ge0}$ with state space $(\mathcal{N}\times\N,\mathscr{H}\times 2^{\N})$.
+The coupled process $\{(\tilde{X}_t,\tilde{Z}_t)\}_{t\ge0}$ is defined by its intensity $\tilde{\lambda}$ and transition function $\tilde{K}$ as follows:
+\begin{equation}
+	\tilde{\lambda}(\xi,n):=
+\begin{cases}
+	b(\xi)+d(\xi)+q_n,\ \ \ &\mbox{if}~\xi\in\mathcal{N}_m,~m\ne n,\\
+	d(\xi)+\sum_{\ell=1}^{\infty}q_{n,n+\ell},\ \ \ &\mbox{if}~\xi\in\mathcal{N}_n,
+\end{cases}
+\end{equation}
+and for any $\xi\in\mathcal{N}$, $M\in\mathscr{H}$, 
+\begin{enumerate}
+	\item when $\xi\in\mathcal{N}_m$, and $m\ne n$, 
+\begin{align}
+	\tilde{K}(\xi,n;M\times\{n\})&=\frac{\lambda(\xi)}{\tilde{\lambda}(\xi,n)}K(\xi,M),\nonumber\\
+	\tilde{K}(\xi,n;\{\xi\}\times\{n+\ell\})&=\frac{q_{n,n+\ell}}{\tilde{\lambda}(\xi,n)},~~~\ell\ge1,\\
+	\tilde{K}(\xi,n;\{\xi\}\times\{n-1\})&=\frac{q_{n,n-1}}{\tilde{\lambda}(\xi,n)};\nonumber
+\end{align}
+\item when $\xi\in\mathcal{N}_n$,
+\begin{align}
+	\tilde{K}(\xi,n;M_{n+\ell}\times\{n+\ell\})&=\frac{\ell b_{\ell}(\xi,S^{\ell})}{\tilde{\lambda}(\xi,n)}K(\xi,M_{n+\ell}),\ \ \ \ell\ge1,\nonumber\\
+	\tilde{K}(\xi,n;\{\xi\}\times\{n+\ell\})&=\frac{q_{n,n+\ell}-\ell b_{\ell}(\xi,S^{\ell})}{\tilde{\lambda}(\xi,n)},\ \ \ \ell\ge1,\nonumber\\
+	\tilde{K}(\xi,n;M_{n-1}\times\{n-1\})&=\frac{q_{n,n-1}}{\tilde{\lambda}(\xi,n)}K(\xi,M_{n-1}),\\
+	\tilde{K}(\xi,n;M_{n-1}\times\{n\})&=\frac{d(\xi)-q_{n,n-1}}{\tilde{\lambda}(\xi,n)}K(\xi,M_{n-1}),\nonumber
+\end{align}
+where $M_k:=M\cap\mathcal{N}_k$ for all $k\ge0$.
+\end{enumerate}
+Similarly, let $\leftsup{(m,k)}{\tilde{Q}}(\xi,n;F)$ denote the probability of a transition from $(\xi,n)$ to $F\subseteq\mathcal{N}\times\N$ in time $t$ without having entered 
+$$
+\{(\zeta,j)\in\mathcal{N}\times\N:~\zeta\in\mathcal{N}_{>m} ~\mbox{or}~ j>k\}
+$$
+From the construction of the coupled process $(\tilde{X}_t,\tilde{Z}_t)$, it is easy to check that it satisfies the following properties:
+\begin{enumerate}
+	\item[i)] For any $\xi\in\mathcal{N}$, $K\subseteq \N$,
+\begin{equation}
+	\tilde{Q}_t(\xi,n;\mathcal{N}\times K)=q_t(n,K);
+\end{equation}
+\item[ii)] For any $\xi\in\mathcal{N}$, $M\in\mathscr{H}$,  $\tilde{Q}_t(\xi,n;M\times\N)$ is independent of $n\in\N$ and if $Q_t(\xi,M)=\tilde{Q}_t(\xi,n;M\times\N)$ then $Q_t$ is the minimal solution of the backwards equations for the original process $\{X_t\}_{t\ge0}$;
+\item[iii)] If $\xi\in\mathcal{N}_m$ and $m\le n$, then 
+	$$
+	\tilde{Q}_t(\xi,n;\Gamma)=0
+	$$
+	for all $t\ge0$, where
+	$$\Gamma=\{(\zeta,\tilde{m})\in\mathcal{N}\times \N:\zeta\in\mathcal{N}_k,~~\mbox{and}~ k>\tilde{m}\}.$$
+\end{enumerate}
+Furthermore, for any $\xi\in\mathcal{N}_j$ with $j\le n$, we have 
+\begin{equation}
+	\leftsup{(m,k)}{\tilde{Q}}_t(\xi,n;F)=\leftsup{(\tilde{m},k)}{\tilde{Q}}_t(\xi,n;F)
+\end{equation}
+for any $m,\tilde{m}>k$,
+and
+\begin{equation}
+	\leftsup{(m,k)}{\tilde{Q}}_t(\xi,n;\mathcal{N}\times K)=\leftsup{(k)}{q}_t(n,K)
+\end{equation}
+for any $m>k$.
+Therefore, according to Lemma~\ref{lma1}, we have, for any $\xi\in\mathcal{N}_j$ with $j\le n$
+\begin{equation}
+	q^{(\infty)}_t(n,K)=\leftsup{(\infty)}{q}_t(n,K)=\lim_{k\to\infty}\leftsup{(k+1,k)}{\tilde{Q}}_t(\xi,n;\mathcal{N}\times K),
+\end{equation}
+and again by Lemma~\ref{lma1}, %we have, for any $\xi\in\mathcal{N}_j$ with $j\le n$,
+\begin{equation}
+  \lim_{k\to\infty}\leftsup{(k+1,k)}{\tilde{Q}}_t(\xi,n;\mathcal{N}\times K)
+  =\tilde{Q}^{(\infty)}_t(\xi,n;\mathcal{N}\times K).
+\end{equation}
+This leads to that 
+for any $\xi\in\mathcal{N}_j$ with $j\le n$,
+\begin{equation}
+	q^{(\infty)}_t(n,K)=\tilde{Q}^{(\infty)}_t(\xi,n;\mathcal{N}\times K),
+\end{equation}
+and in particular, 
+\begin{equation}
+	\tilde{Q}^{(\infty)}_t(\xi,n;\mathcal{N}\times\N)=q^{(\infty)}_t(n,\N)=1.
+\end{equation}
+In the other direction, 
+for any $m\ge0$
+\begin{equation}
+	\tilde{Q}^{(m)}_t(\xi,n;\mathcal{N}\times\N)\le Q^{(m)}_t(\xi,\mathcal{N}),
+\end{equation}
+thus 
+\begin{equation}
+	Q^{(\infty)}_t(\xi,\mathcal{N})=1.
+\end{equation}
+Therefore, the backwards equations \eqref{backweq-1} and \eqref{backweq-2} corresponding to $\lambda$ and $K$ has a unique solution.
+\end{proof}
+
+
+\section{Main theorem}
+\begin{thm}
+	Suppose the single death process $\{Z_t\}_{t\ge0}$ with $Q$-matrix given in \eqref{qmatrix1}-\eqref{qmatrix4} satisifying 
+$\sum_{n=1}^\infty R_n=\infty$, where $R_0=R_{-1}=1$ and for all $n\ge1$, 
+\begin{equation}
+	R_n:=\frac1{q_{n+1,n}}\left(1+\sum_{m=0}^n\sum_{k=n+1}^{\infty}q_{m,k}R_{m-1}\right),
+\end{equation}
+then the backward equations \eqref{backweq-1} and \eqref{backweq-2} corresponding to $\lambda$ and $K$ have a unique solution.
+\end{thm}
+The theorem is a direct result of Theorem~\ref{thm-uni1} and \cite[Theorem~4]{CPZC05}.
+\begin{thm}
+	If there exists a stationary distribution for the simple process $\{Z_t\}_{t\ge0}$, then there also exists a stationary distribution for $\{X_t\}_{t\ge0}$.   
+\end{thm}
+\begin{proof}
+	According to \cite[Theorem~7]{CPZC05}, a downwardly skip-free process with a conservative $q$-matrix $Q=(q_{i,j})_{i,j\ge0}$ has a  unique stationary distribution if and only if $\sum_{n=1}^\infty R_n=\infty$, where $R_0=R_{-1}=1$ and for all $n\ge1$, 
+\begin{equation}
+	R_n:=\frac1{q_{n+1,n}}\left(1+\sum_{m=0}^n\sum_{k=n+1}^{\infty}q_{m,k}R_{m-1}\right).
+\end{equation}
+According to Proposition~\ref{statdis1}, 
+
+\end{proof}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% References   %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\ac{{Academic Press}~}
+\def\aap{{Adv. Appl. Prob.}~}
+\def\ap{{Ann. Probab.}~}
+\def\anap{{Ann. Appl. Probab.}~}
+\def\eljp{{\it Electron.\ J.~Probab.\/}~} 
+\def\jap{{J. Appl. Probab.}~}
+\def\jws{{John Wiley~$\&$ Sons}~}
+\def\ny{{New York}~}
+\def\ptrf{{Probab. Theory Related Fields}~}
+\def\sp{{Springer}~}
+\def\spa{{Stochastic Process. Appl.}~}
+\def\sv{{Springer-Verlag}~}
+\def\tpa{{Theory Probab. Appl.}~}
+\def\zw{{Z. Wahrsch. Verw. Gebiete}~}
+
+% \bibliographystyle{apalike}
+% \bibliography{ref}
+
+\begin{thebibliography}{}
+
+
+\bibitem[Barbour and Brown~(1992)]{BB92}
+\newblock Barbour, A.~D. and Brown,~T.~C.~(1992). 
+\newblock Stein's method and point process approximation. \newblock {\em \spa}~\textbf{43}, 9--31.
+
+\bibitem[Billingsley~(1995)]{B95}
+\newblock Billingsley, P.~(1995).
+\newblock {\em Probability and Measure}.  
+\newblock Third Edition. John Wiley \& Sons. 
+
+\bibitem[Chen {\it et al}~(2005)]{CPZC05} 
+\newblock Chen, A., Pollett, P., Zhang, H., and Cairns, B.~(2005).
+\newblock Uniqueness criteria for continuous-time Markov chains with general transition structures.
+\newblock {\em \aap}~\textbf{37}, 1056--1074.
+
+\bibitem[Chen~(1975)]{Chen75} Chen, L. H. Y.~(1975).
+\newblock Poisson approximation for dependent trials. 
+\newblock {\em \ap}\textbf{3}, 534--545. 
+
+\bibitem[Chen and Xia~(2004)]{CX04} Chen, L. H. Y  and Xia, A.~(2004) 
+\newblock Stein's method, Palm theory and Poisson process approximation. 
+\newblock {\em \ap}\textbf{32}, 2545--2569.
+
+\bibitem[Chiu {\it et al}~(2013)]{chiu13}
+\newblock Chiu, S. N., Stoyan, D., Kendall, W. S. and Mecke, J.~(2013)
+\newblock {\em Stochastic geometry and its applications}. 
+\newblock John Wiley \& Sons.
+
+\bibitem[Daley and Vere-Jones~(2003)]{DV03}
+Daley, D. J. and Vere-Jones, D.~(2003). 
+\newblock {\em An introduction to the theory of point processes, Vol. I: Probability and its Applications}.  
+\newblock Second edition, Springer-Verlag.
+
+\bibitem[Daley and Vere-Jones~(2008)]{DV08}
+Daley, D. J. and Vere-Jones, D.~(2008). 
+\newblock {\em An introduction to the theory of point processes, Vol. II: General Theory and Structure}.  
+\newblock Second edition, Springer-Verlag.
+
+\bibitem[Ethier and Kurtz~(2009)]{EK09}
+Ethier, S. N. and Kurtz T. G.~(2009).
+\newblock {\em Markov processes: Characterization and Convergence}.
+\newblock John Wiley \& Sons.
+
+\bibitem[Flint {\it et al.}~(2022)]{FX22}Flint, I., Golding, N., Vesk, P., Wang, Y. and Xia, A.~(2022). 
+\newblock The saturated pairwise interaction Gibbs point process as a joint species distribution model. 
+\newblock {\em J. R. Stat. Soc. Ser. C. Appl. Stat.}~\textbf{71}, 1721--1752.
+
+\bibitem[Kallenberg~(2021)]{kallenberg21}
+Kallenberg, O.~(2021).
+\newblock {\em Foundations of Modern Probability}.
+\newblock Third Edition. Springer Cham.
+
+\bibitem[Kallenberg~(1983)]{kallenberg83}
+Kallenberg, O.~(1983).
+\newblock {\em Random Measures}.
+\newblock De Gruyter, Berlin, Boston.
+
+\bibitem[Kondratiev and Lytvynov~(2005)]{KL05}
+Kondratiev, Y. and Lytvynov, E.~(2005)
+\newblock Glauber dynamics of continuous particle systems
+\newblock {\em Ann. Inst. Henri Poincar\'e Probab. Stat.}~\textbf{41}, 685--702. 
+
+\bibitem[Moller and Waagepetersen~(2003)]{moller03book}
+Moller, J. and Waagepetersen, R.P.~(2003)
+\newblock {\rm Statistical inference and simulation for spatial point processes}.
+\newblock Chapman and Hall/CRC.
+
+\bibitem[Preston~(1975)]{Preston75}
+Preston, C.~(1975).
+\newblock Spatial birth and death processes.
+\newblock {\em \aap}~\textbf{7}, 371--391.
+
+
+
+\bibitem[Zhang~(2018)]{Zhang18}
+Zhang, Y.~(2018)
+\newblock Criteria on ergodicity and strong ergodicity of single death processes.
+\newblock {\em Front. Math. China}~\textbf{13}, 1215--1243.
+
+  \end{thebibliography}
+\end{document}
+
+
+
+
+
+
+
+
+
