@@ -354,26 +354,6 @@ $$
 and $\mathscr{H}_n:=\mathscr{H}\cap\mathcal{N}_n$, for $n\ge0$. 
 Similarly, we write the $\N:=\{0,1,2,\dots\}$ and 
 $$\N_{>n}:=\{n+1,n+2,\dots\}.$$
-\subsection*{Markov processes and martingale problem}
- 
-Let $E$ be a metric space. Denote by $\mathcal{M}(E)$ the collection of all real-valued Borel measurable functions on $E$, and  
-$\mathcal{B}(E) \subset \mathcal{M}(E)$ the Banach space of bounded functions with 
-$\|f\| := \sup_{x \in E} |f(x)|,$
-and $\overline{\mathcal{C}}(E) \subset \mathcal{B}(E)$ is the subspace of bounded continuous functions.
-\begin{prop}\cite[Theorem~4.9.9]{EK09}\label{statdis1}
-Let $E$ be locally compact and separable. 
-Let $\{T(t)\}$ be a semigroup on $\mathcal{B}(E)$ given by a transition function $P(t,x,\Gamma)$ such that 
-$T(t): \overline{\mathcal{C}}(E) \to \overline{\mathcal{C}}(E)$ for all $t\ge0$,
-and let $X$ be a measurable Markov process corresponding to $\{T(t)\}$.
-Let $\varphi, \psi \in \mathcal{M}(E)$, $\varphi \ge 0$, $\psi \le C$ for some constant $C$, and 
-$\lim_{x \to \Delta} \psi(x) < 0,$
-and suppose that 
-\begin{equation}
-	\varphi(X(t))-\int_0^t\psi(X(s))ds
-\end{equation}
-is a supermartingale. 
-Then there exists a stationary distribution for $\{T(t)\}$.
-\end{prop}
 \section{Spatial birth--death processes}
 \subsection{Construction}
 A spatial birth--death process $\{X_t\}_{t\ge0}$, first introduced by \cite{Preston75}, is a Markov process defined on the configuration space $(\mathcal{N},\mathscr{H})$.
@@ -403,7 +383,7 @@ $(S^\ell, \mathcal{S}^{\otimes \ell})$ such that:
 	\item The probability of more than one change in the process between times $t$ and $t+s$ is $o(s)$.
 \end{enumerate}
 More formally, we can construct the Markov process $\{X_t\}_{t\ge0}$ from a jump process $\{Y_n\}_{n\ge0}$. 
-Denote $\nu\in\mathscr{P}(\mathcal{N})$ a probability distribution of a Gibbs point process on $S$.
+Let $\nu\in\mathscr{P}(\mathcal{N})$ be an initial distribution.
 Let $D:\mathcal{N}\times S \to [0,\infty)$ be a bounded, measurable function. For each $\ell \ge 1$, let 
 $\lambda_\ell : \mathcal{N} \to [0,\infty)$ be measurable and bounded, and let 
 $b_\ell : \mathcal{N} \times \mathcal{S}^{\otimes \ell} \to [0,\infty)$ be a kernel such that, for every 
@@ -429,14 +409,14 @@ Finally, denote
 	\item Given $Y_n=\xi$, then 
 \begin{equation}
 	Y_{n+1}:=\begin{cases}
-		\xi\cup\{x_1,\dots,x_\ell\},\ \ \ &\mbox{w.p.}~\frac{1}{\lambda(\xi)}\ell\lambda_{\ell}(\xi)b_{\ell}(\xi,\mathrm{d}x_1,\dots,\mathrm{d}x_{\ell});\\
+		\xi\cup\{x_1,\dots,x_\ell\},\ \ \ &\mbox{w.p.}~\frac{1}{\lambda(\xi)}\ell\lambda_{\ell}(\xi)b_{\ell}(\xi,\mathrm{d}(x_1,\dots,x_{\ell}));\\
 		\xi\backslash\{x\},\ \ \ &\mbox{w.p.}~\frac{D(\xi,x)}{\lambda(\xi)};
 	\end{cases}
 \end{equation}
 \item That is $\{Y_n\}_{n\ge0}$ has initial distribution $\nu$ and the transition function
 \begin{align}
 	K(\xi,M):&=\IP(Y_{n+1}\in M|Y_n=\xi)\nonumber\\
-		  &=\frac{1}{\lambda(\xi)}\sum_{\ell=1}^{\infty}\ell\lambda_{\ell}(\xi)\int_{S^{\ell}}\bone(\xi\cup\{x_1,\dots,x_\ell\}\in M)b_{\ell}(\xi,\mathrm{d}x_1,\dots,\mathrm{d}x_{\ell})\nonumber\\
+		  &=\frac{1}{\lambda(\xi)}\sum_{\ell=1}^{\infty}\ell\lambda_{\ell}(\xi)\int_{S^{\ell}}\bone(\xi\cup\{x_1,\dots,x_\ell\}\in M)b_{\ell}(\xi,\mathrm{d}(x_1,\dots,x_{\ell}))\nonumber\\
 		  &\ \ \ \ +\frac{1}{\lambda(\xi)}\sum_{x\in\xi}D(\xi,x)\bone(\xi\backslash\{x\}\in M).\label{trans1}
 \end{align}
 \end{enumerate}
@@ -449,11 +429,7 @@ Finally, denote
 \end{equation}
 \end{enumerate}
 %Note that $\lambda(\cdot)$ is the intensity of the Markov jump process.
-Denote $\lambda:=\sup_{\xi\in\mathcal{N}}\lambda(\xi)$. To avoid trivialities, assume that $\lambda>0$. Define the transition function $K'(\xi,M)$ on $\mathcal{N}\times \mathscr{H}$ by 
-\begin{equation}
-	K'(\xi,M):=\left(1-\frac{\lambda(\xi)}{\lambda}\right)\delta_{\xi}(M)+\frac{\lambda(\xi)}{\lambda}K(\xi,M),
-\end{equation}
-with $K$ defined in \eqref{trans1}.
+Denote $\lambda:=\sup_{\xi\in\mathcal{N}}\lambda(\xi)$. To avoid trivialities, assume that $\lambda>0$. 
 
 
 Given $X_t=\xi$ with $\xi\in\mathcal{N}$ and $t\ge0$, then the waiting time to the next jump has an exponential distribution with expectation $1/\lambda(\xi)$ and is independent of the past history. The subsequent jump leads either to a death of an individual located at point $x\in\xi$ with probability $\frac{D(\xi,x)}{\lambda(\xi)}$, or a birth of $\ell$ individuals, distributed according to $b_{\ell}(\xi,\cdot)$.  
@@ -463,10 +439,11 @@ The generator $\mathscr{A}$ of $\{X_t\}_{t\ge0}$ is given by
 	(\mathscr{A}f)(\xi)=\lambda(\xi)\int(f(\zeta)-f(\xi))K(\xi,\mathrm{d}\zeta),
 \end{equation}
 which can also be rewrited as 
-\red{
-\begin{equation}
-	\sum_{\ell=1}^\infty \ell \lambda_\ell(\xi)\int_{S^\ell}\left(f(\xi\cup\{x_1,\dots,x_\ell\})-f(\xi)\right)b_\ell(\xi,\mathrm{d}x_1\cdots\mathrm{d}x_\ell)+\int_{S}D(\xi,x)\left(f(\xi\backslash\{x\})-f(\xi)\right)\xi(\mathrm{d}x).
-\end{equation}}
+
+\begin{align}
+	(\mathscr{A}f)(\xi)&=\sum_{\ell=1}^\infty \ell \lambda_\ell(\xi)\int_{S^\ell}\left(f(\xi\cup\{x_1,\dots,x_\ell\})-f(\xi)\right)b_\ell(\xi,\mathrm{d}(x_1\cdots x_\ell))\nonumber\\
+			   &\ \	+\int_{S}D(\xi,x)\left(f(\xi\backslash\{x\})-f(\xi)\right)\xi(\mathrm{d}x).
+\end{align}
 for any bounded measurable function $f:\mathcal{N}\to[0,\infty)$.
 We call the functions $b: \mathcal{N}\to[0,\infty)$ the birth rate coefficient and $d:\mathcal{N}\to[0,\infty)$ the death rate coefficient. 
 
@@ -483,7 +460,7 @@ Note this spatical birth--death process allows multiple birth and single death. 
 To define such a process analytically, we also need to give its transition semigroup, i.e., for $t\ge0$, we need to define $Q_t:\mathcal{N}\times\mathscr{H}\to[0,1]$ such that 
 $$Q_t(\xi,M):=\IP(X_t\in M|X_0=\xi),$$
 for any $\xi\in\mathcal{N}$ and $M\in\mathscr{H}$. 
-$Q_t$ is defined to be the solution of Kolmogorov's backwards equations
+Let $Q_t$ be the solution of Kolmogorov's backwards equations
 \begin{equation}\label{backweq-1}
 	\frac{\partial}{\partial t}Q_t(\xi,M)=-\lambda(\xi)Q_t(\xi,M)+\lambda(\xi)\int Q_t(\zeta,M)K(\xi,\mathrm{d}\zeta),
 \end{equation}
@@ -520,7 +497,7 @@ Set for any $n\ge1$,
 \begin{align}
 	q_{n,n-1}&:=\inf_{\xi:\|\xi\|=n}d(\xi)=\inf_{\xi:\|\xi\|=n}\sum_{x\in\xi}D(\xi,x);\label{qmatrix1}\\
 	q_{i,j}&:=0,~~~\forall~j<i-1;\\
-	q_{n,n+\ell}&:=\sup_{\xi:\|\xi\|=n}\ell b_{\ell}(\xi,S^{\ell}),~~~\forall~\ell\ge1;\\
+	q_{n,n+\ell}&:=\sup_{\xi:\|\xi\|=n}\ell\lambda_\ell(\xi) b_{\ell}(\xi,S^{\ell}),~~~\forall~\ell\ge1;\\
 	q_{n,n}&:=-q_{n,n-1}-\sum_{\ell=1}^{\infty}q_{n,n+\ell}.\label{qmatrix4}
 \end{align}
 Notationally, we also set $q_n:=-q_{n,n}$. 
@@ -625,25 +602,73 @@ Therefore, the backwards equations \eqref{backweq-1} and \eqref{backweq-2} corre
 
 
 \section{Main theorem}
-\begin{thm}
-	Suppose the single death process $\{Z_t\}_{t\ge0}$ with $Q$-matrix given in \eqref{qmatrix1}-\eqref{qmatrix4} satisifying 
-$\sum_{n=1}^\infty R_n=\infty$, where $R_0=R_{-1}=1$ and for all $n\ge1$, 
-\begin{equation}
-	R_n:=\frac1{q_{n+1,n}}\left(1+\sum_{m=0}^n\sum_{k=n+1}^{\infty}q_{m,k}R_{m-1}\right),
+\subsection{Foster-Lyapunov condition}
+
+According to \cite[Theorem~3]{Tweedie81}, if $Q$ is regular, then $\{Z_t\}_{t\ge0}$ is 
+\begin{enumerate}
+	\item ergodic if and only if there is an $N\ge0$ and a finite solution $y_i\ge0$ to the inequality
+		\begin{equation}\label{lyapunov-ineq}
+	\sum_{k}q_{i,k}y_k\le -\lambda y_i-1,~~~i>N,
 \end{equation}
-then the backward equations \eqref{backweq-1} and \eqref{backweq-2} corresponding to $\lambda$ and $K$ have a unique solution.
-\end{thm}
-The theorem is a direct result of Theorem~\ref{thm-uni1} and \cite[Theorem~4]{CPZC05}.
+and $y_i=0$ for $i=0,1,\dots,N$, with $\lambda=0$, such that 
+\begin{equation}\label{cond-2}
+	\sum_{k}\frac{(1-\delta_{i,k})q_{i,k}}{q_i}y_k<\infty,~~~i\le N;
+\end{equation}
+\item exponentially ergodic if and only if there is an $N\ge0$ and a finite solution $y_i\ge0$ to the inequalities \eqref{lyapunov-ineq} for some $\lambda>0$ with $\lambda<q_i$ for all $i$ such that \eqref{cond-2} holds.
+\end{enumerate}
+
+We can construct a specific test sequence $y_i$ that grows linearly with $i$ to test for both standard and exponential ergodicity. For the simplest setting, we take $N=0$ and $y_i=i$ for $i\ge0$, and $y_0=0$. Therefore, for $i>0$, 
+\begin{align*}
+	\sum_{k}q_{i,k}y_k=\sum_k q_{i,k}k&=\sum_{k>i}q_{i,k}k+q_{i,i-1}(i-1)+q_{i,i}i\\
+					  &=\sum_{k>i}q_{i,k}k+q_{i,i-1}(i-1)-\left(\sum_{k>i}q_{i,k}+q_{i,i-1}\right)i\\
+					  &=\sum_{\ell=1}^\infty q_{i,i+\ell}\ell-q_{i,i-1}.
+\end{align*}
+Let
+\begin{equation}
+	\Delta(i) := \sum_{\ell=1}^{\infty} \ell q_{i,i+\ell} - q_{i,i-1},
+\end{equation}
+for all $i\ge1$. We have the following sufficient conditions from Tweedie's criteria.
+
 \begin{thm}
-	If there exists a stationary distribution for the simple process $\{Z_t\}_{t\ge0}$, then there also exists a stationary distribution for $\{X_t\}_{t\ge0}$.   
+Suppose $Q$ is regular, and it holds that   
+\begin{equation}
+	\sum_{\ell=1}\ell q_{0,\ell}<\infty.
+\end{equation}
+Then $\{Z_t\}_{t\ge0}$ is ergodic if 
+\begin{equation}
+  \Delta(i)\le -1,
+\end{equation}
+for all $i\ge1$. \footnote{\red{Essentially, we only need 
+$
+\sup_{i>0}\Delta(i)<0.
+$
+}}
+Moreover, $\{Z_t\}_{t\ge0}$ is exponentially ergodic if 
+\begin{equation}
+  \Delta(i)\le -\lambda i-1,
+\end{equation}
+for all $i\ge1$ with some $0<\lambda<q_i$, for all $i\ge1$.
+\end{thm}
+
+\subsection{An alternative approach}
+Denote 
+\begin{equation}
+	q_n^{(k)}:=\sum_{j=k}^{\infty}q_{n,j},~~~k>n\ge0,
+\end{equation}
+and
+\begin{equation}
+	G_i^{(i)}:=1,~~~G_n^{(i)}:=\frac1{q_{n,n-1}}\sum_{k=n+1}^iq_n^{(k)}G_k^{(i)},~~~1\le n<i.
+\end{equation}
+\begin{thm}
+	Assume that the single death process $\{Z_t\}_{t\ge0}$ with $Q$-matrix given in \eqref{qmatrix1}-\eqref{qmatrix4} is irreducible and the recurrent.
+	If 
+	\begin{equation}\label{ergod-1}
+	\sum_{k\ge0}q_0^{(k)}\sum_{\ell\ge k}\frac{G_k^{(\ell)}}{q_{\ell,\ell-1}}<\infty,
+\end{equation}
+then the spatial birth-death process $\{X_t\}_{t\ge0}$ is ergodic. 
 \end{thm}
 \begin{proof}
-	According to \cite[Theorem~7]{CPZC05}, a downwardly skip-free process with a conservative $q$-matrix $Q=(q_{i,j})_{i,j\ge0}$ has a  unique stationary distribution if and only if $\sum_{n=1}^\infty R_n=\infty$, where $R_0=R_{-1}=1$ and for all $n\ge1$, 
-\begin{equation}
-	R_n:=\frac1{q_{n+1,n}}\left(1+\sum_{m=0}^n\sum_{k=n+1}^{\infty}q_{m,k}R_{m-1}\right).
-\end{equation}
-According to Proposition~\ref{statdis1}, 
-
+	According to \cite[Theorem~1.1]{Zhang18}, when \eqref{ergod-1} holds, the single death process $\{Z_t\}_{t\ge0}$ is ergodic. It follows from Theorem~\ref{thm-uni1} that $\emptyset$ is an ergodic state for $\{X_t\}_{t\ge0}$. Thus, by the renewal theorem \cite[p.~379]{Feller71}, we get $\lim_{t\to\infty}Q_t(\emptyset,M)$ exists, for any $M\in\mathscr{H}$. Furthermore, Theorem~\ref{thm-uni1} ensures that for any $\xi\in\mathcal{N}$, a passage from $\xi$ to state $\emptyset$ is certain and the expected passage time is finite. By the renewal theorem, we get $\lim_{t\to\infty}Q_t(\xi,M)$ exists for any $\xi\in\mathcal{N}$ and $M\in\mathscr{H}$.
 \end{proof}
 
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -713,6 +738,11 @@ Ethier, S. N. and Kurtz T. G.~(2009).
 \newblock {\em Markov processes: Characterization and Convergence}.
 \newblock John Wiley \& Sons.
 
+\bibitem[Feller~(1971)]{Feller71}
+Feller, W.~(1971). 
+\newblock {\em An Introduction to Probability Theory and Its Applications.\/}, Vol.~2, 2nd ed., 
+\newblock John Wiley \& Sons, Inc.
+
 \bibitem[Flint {\it et al.}~(2022)]{FX22}Flint, I., Golding, N., Vesk, P., Wang, Y. and Xia, A.~(2022). 
 \newblock The saturated pairwise interaction Gibbs point process as a joint species distribution model. 
 \newblock {\em J. R. Stat. Soc. Ser. C. Appl. Stat.}~\textbf{71}, 1721--1752.
@@ -742,7 +772,10 @@ Preston, C.~(1975).
 \newblock Spatial birth and death processes.
 \newblock {\em \aap}~\textbf{7}, 371--391.
 
-
+\bibitem[Tweedie~(1981)]{Tweedie81}
+Tweedie, R. L.~(1981).
+\newblock Criteria for Ergodicity, Exponential Ergodicity and Strong Ergodicity of Markov Processes.
+\newblock {\em \jap}~\textbf{18}, 122--130.
 
 \bibitem[Zhang~(2018)]{Zhang18}
 Zhang, Y.~(2018)
